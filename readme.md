@@ -73,4 +73,7 @@ fetch("/proxy/aggsite/SubCategories",{
 从headers中 读取代理配置的属性名
 
 
+## 注意
+1. 该包`"peerDependencies": {    "http-proxy-middleware": "*" }`   什么意思呢，就是你需自行安装http-proxy-middleware
+
 
