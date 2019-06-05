@@ -3,5 +3,4 @@ import express from "express"
 
 declare function createProxy(config?: httpProxy.Config, propertyKey?: string): express.NextFunction;
 
-export default createProxy
-
+export = createProxy
