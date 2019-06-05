@@ -1,7 +1,7 @@
 import express from "express"
 const fs = require("fs");
 const path = require("path");
-const createProxy = require("../build").default;
+import createProxy from "dynamic-http-proxy"
 const https = require("https");
 
 const privateKey = fs.readFileSync(
@@ -15,8 +15,8 @@ const certificate = fs.readFileSync(
 
 const app = express();
 
-
 app.use(express.static(__dirname + "/public"))
+
 
 app.use("/proxy", createProxy({
     ssl: { key: privateKey, cert: certificate },
