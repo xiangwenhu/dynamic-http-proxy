@@ -1,0 +1,38 @@
+{
+  "name": "dynamic-http-proxy",
+  "version": "1.0.0",
+  "description": "动态的代理http请求，一个中间件在手，哪个地方的请求都可以有！",
+  "main": "build/index.js",
+  "module": "build/es5/index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:cmjs": "tsc -P tsconfig.json",
+    "build:es6": "tsc -P tsconfig.json --module ES6 --outDir build/es6",
+    "build": "npm run build:cmjs & npm run build:es6",
+    "start": "ts-node test/app.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xiangwenhu/dynamic-http-proxy.git"
+  },
+  "peerDependencies": {
+    "http-proxy-middleware": "*"
+  },
+  "author": "xiangwenhu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xiangwenhu/dynamic-http-proxy/issues"
+  },
+  "homepage": "https://github.com/xiangwenhu/dynamic-http-proxy#readme",
+  "devDependencies": {
+    "@types/express": "^4.17.0",
+    "@types/http-proxy-middleware": "^0.19.2",
+    "express": "^4.17.1",
+    "ts-node": "^8.2.0",
+    "typescript": "^3.5.1"
+  },
+  "dependencies": {
+    "http-proxy-middleware": "^0.19.1"
+  }
+}

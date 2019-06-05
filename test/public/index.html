@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Proxy Test</title>
+    <link href="./jsoneditor.min.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+
+    <div>
+        GET 请求代码：<input type="button" value="执行" id="btnGet">
+        <pre>
+            <code>
+                fetch("/proxy/api/weather/city/101030100", {
+                    headers:{
+                       __proxy__: JSON.stringify({
+                             target: "http://t.weather.sojson.com",      
+                       })
+                    }
+              })
+              .then( res=> res.json())
+              .then(d=>console.log(d))
+
+            </code>
+        </pre>
+    </div>
+
+    <div>
+        POST 请求代码： <input type="button" value="执行" id="btnPost">
+        <pre>
+            <code>
+                fetch("/proxy/aggsite/SubCategories",{
+                    "method": "post",
+                    "headers": {
+                    "content-type": "application/json; charset=UTF-8",
+                    "__proxy__": JSON.stringify({
+                        "target": "https://www.cnblogs.com"
+                    })
+                    },
+                    "body": JSON.stringify({
+                    "cateIds": "108698,2,108701,108703,108704,108705,108709,108712,108724,4"
+                    })
+                })
+                .then( res=> res.text())
+                .then(d=>console.log(d))
+
+            </code>
+        </pre>
+    </div>
+
+
+    </div>
+
+    <div id="message"
+        style="right:0; top:0; position:absolute; height:400px; width:600px; border: solid 1px blue; overflow-y: scroll;">
+
+    </div>
+
+    <script src="./jsoneditor.min.js"></script>
+    <script>
+
+        document.getElementById("btnGet").addEventListener("click", function () {
+            message.innerHTML = "";
+            fetch("/proxy/api/weather/city/101030100", {
+                headers: {
+                    __proxy__: JSON.stringify({
+                        target: "http://t.weather.sojson.com",
+                    })
+                }
+            })
+                .then(res => res.json())
+                .then(d => message.innerHTML = JSON.stringify(d, 4))
+                .catch(err => alert(err))
+        })
+
+
+        document.getElementById("btnPost").addEventListener("click", function () {
+            message.innerHTML = "";
+            fetch("/proxy/aggsite/SubCategories", {
+                "method": "post",
+                "headers": {
+                    "content-type": "application/json; charset=UTF-8",
+                    "__proxy__": JSON.stringify({
+                        "target": "https://www.cnblogs.com"
+                    })
+                },
+                "body": JSON.stringify({
+                    "cateIds": "108698,2,108701,108703,108704,108705,108709,108712,108724,4"
+                })
+            })
+                .then(res => res.text())
+                .then(d => message.innerHTML = JSON.stringify(d))
+                .catch(err => alert(err))
+        })
+
+    </script>
+</body>
+
+</html>
