@@ -30,19 +30,40 @@ function accepts(req: express.Request, type: string[]) {
 }
 
 function responseError(req: express.Request, res: express.Response, error: Error) {
-  const err = getError(error)
-  if (accepts(req, ["application/json"])) {
-    res.json(err);
-  } else if (accepts(req, ["text", "html"])) {
-    res.write(JSON.stringify(err))
-    res.end();
+  if (!res.finished) {
+    const err = getError(error)
+    if (accepts(req, ["application/json"])) {
+      res.json(err);
+    } else if (accepts(req, ["text", "html"])) {
+      res.write(JSON.stringify(err))
+      res.end();
+    } else {
+      // TODO::
+      res.write(JSON.stringify(err))
+      res.end();
+    }
   }
+}
+
+function getProxyConfig(req: express.Request, propertyKey: string) {
+  const strConfig = req.headers[propertyKey];
+  if (strConfig === undefined) {
+    throw new Error(`headers缺少参数${propertyKey}`)
+  }
+
+  let config: string = Array.isArray(strConfig) ? strConfig[0] : strConfig;
+  if (config.startsWith("http") || config.startsWith("https:") || config.startsWith("ws:")) {
+    return {
+      target: config
+    }
+  }
+  return toJSON(config);
 }
 
 export default function createProxy(config: httpProxy.Config = Object.create(null) as httpProxy.Config, propertyKey: string = PROXY_KEY) {
   return function (req: express.Request, res: express.Response, next: express.NextFunction) {
     try {
-      const dynamicConfig = toJSON(req.headers[propertyKey]);
+      const dynamicConfig = getProxyConfig(req, propertyKey);
       delete req.headers[propertyKey]
       const finalConfig = mergeConfig(config, dynamicConfig);
       httpProxy(finalConfig)(req, res, next);

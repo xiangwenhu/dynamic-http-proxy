@@ -18,9 +18,7 @@
             <code>
                 fetch("/proxy/api/weather/city/101030100", {
                     headers:{
-                       __proxy__: JSON.stringify({
-                             target: "http://t.weather.sojson.com",      
-                       })
+                       __proxy__:"http://t.weather.sojson.com"
                     }
               })
               .then( res=> res.json())
@@ -68,9 +66,7 @@
             message.innerHTML = "";
             fetch("/proxy/api/weather/city/101030100", {
                 headers: {
-                    __proxy__: JSON.stringify({
-                        target: "http://t.weather.sojson.com",
-                    })
+                    __proxy__: "http://t.weather.sojson.com"
                 }
             })
                 .then(res => res.json())

@@ -1,7 +1,8 @@
 import express from "express"
 const fs = require("fs");
 const path = require("path");
-import createProxy from "dynamic-http-proxy"
+// import createProxy from "dynamic-http-proxy"
+import createProxy from  "../src/index"
 const https = require("https");
 
 const privateKey = fs.readFileSync(
