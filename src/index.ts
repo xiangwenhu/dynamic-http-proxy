@@ -52,7 +52,7 @@ function getProxyConfig(req: express.Request, propertyKey: string) {
   }
 
   let config: string = Array.isArray(strConfig) ? strConfig[0] : strConfig;
-  if (config.startsWith("http") || config.startsWith("https:") || config.startsWith("ws:")) {
+  if (config.startsWith("http:") || config.startsWith("https:") || config.startsWith("ws:")) {
     return {
       target: config
     }

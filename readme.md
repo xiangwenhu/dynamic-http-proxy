@@ -27,9 +27,8 @@ GET请求: 天气
 ```js
 fetch("/proxy/api/weather/city/101030100", {
       headers:{
-         __proxy__: JSON.stringify({
-               target: "http://t.weather.sojson.com",      
-         })
+         __proxy__: "http://t.weather.sojson.com",      
+
       }
 })
 .then(res=> res.json())
@@ -75,5 +74,7 @@ fetch("/proxy/aggsite/SubCategories",{
 
 ## 注意
 1. 该包`"peerDependencies": {    "http-proxy-middleware": "*" }`   什么意思呢，就是你需自行安装http-proxy-middleware
+2. `__proxy__` 如果是以http:, https:或者ws:开头，会认为是target的设置。   
+如果除了设置target属性，其他属性不需要设置时， 这样可以写更少的代码。
 
 

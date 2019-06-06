@@ -51,7 +51,7 @@ function getProxyConfig(req, propertyKey) {
         throw new Error("headers\u7F3A\u5C11\u53C2\u6570" + propertyKey);
     }
     var config = Array.isArray(strConfig) ? strConfig[0] : strConfig;
-    if (config.startsWith("http") || config.startsWith("https:") || config.startsWith("ws:")) {
+    if (config.startsWith("http:") || config.startsWith("https:") || config.startsWith("ws:")) {
         return {
             target: config
         };
