@@ -48,7 +48,7 @@ function responseError(req: express.Request, res: express.Response, error: Error
 function getProxyConfig(req: express.Request, propertyKey: string) {
   const strConfig = req.headers[propertyKey];
   if (strConfig === undefined) {
-    throw new Error(`headers缺少参数${propertyKey}`)
+    return Object.create(null);
   }
 
   let config: string = Array.isArray(strConfig) ? strConfig[0] : strConfig;
@@ -60,12 +60,25 @@ function getProxyConfig(req: express.Request, propertyKey: string) {
   return toJSON(config);
 }
 
+
+function checkProxyConfig(config: httpProxy.Config) {
+  if (!("target" in config)) {
+    throw new Error("target参数不能为空！");
+  }
+}
+
+
+
 export default function createProxy(config: httpProxy.Config = Object.create(null) as httpProxy.Config, propertyKey: string = PROXY_KEY) {
   return function (req: express.Request, res: express.Response, next: express.NextFunction) {
     try {
+      // 从headers获取代理配置
       const dynamicConfig = getProxyConfig(req, propertyKey);
       delete req.headers[propertyKey]
+      // 合并
       const finalConfig = mergeConfig(config, dynamicConfig);
+      // 检查必要参数
+      checkProxyConfig(finalConfig);
       httpProxy(finalConfig)(req, res, next);
     } catch (err) {
       responseError(req, res, err);

@@ -76,5 +76,14 @@ fetch("/proxy/aggsite/SubCategories",{
 1. 该包`"peerDependencies": {    "http-proxy-middleware": "*" }`   什么意思呢，就是你需自行安装http-proxy-middleware
 2. `__proxy__` 如果是以http:, https:或者ws:开头，会认为是target的设置。   
 如果除了设置target属性，其他属性不需要设置时， 这样可以写更少的代码。
+3. express在初始化中间件时，可以指定默认的target
+```js
+app.use("/proxy", createProxy({
+    target: 'http://aaa.bbb.com'
+    pathRewrite: {
+        '^/proxy': ''
+    }
+}))
+```
 
 
