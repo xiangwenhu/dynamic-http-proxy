@@ -43,7 +43,7 @@ function responseError(req, res, error) {
 function getProxyConfig(req, propertyKey) {
     var strConfig = req.headers[propertyKey];
     if (strConfig === undefined) {
-        throw new Error("headers\u7F3A\u5C11\u53C2\u6570" + propertyKey);
+        return Object.create(null);
     }
     var config = Array.isArray(strConfig) ? strConfig[0] : strConfig;
     if (config.startsWith("http:") || config.startsWith("https:") || config.startsWith("ws:")) {
@@ -53,14 +53,23 @@ function getProxyConfig(req, propertyKey) {
     }
     return toJSON(config);
 }
+function checkProxyConfig(config) {
+    if (!("target" in config)) {
+        throw new Error("target参数不能为空！");
+    }
+}
 export default function createProxy(config, propertyKey) {
     if (config === void 0) { config = Object.create(null); }
     if (propertyKey === void 0) { propertyKey = PROXY_KEY; }
     return function (req, res, next) {
         try {
+            // 从headers获取代理配置
             var dynamicConfig = getProxyConfig(req, propertyKey);
             delete req.headers[propertyKey];
+            // 合并
             var finalConfig = mergeConfig(config, dynamicConfig);
+            // 检查必要参数
+            checkProxyConfig(finalConfig);
             httpProxy(finalConfig)(req, res, next);
         }
         catch (err) {
