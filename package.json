@@ -1,6 +1,6 @@
 {
   "name": "dynamic-http-proxy",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "动态的代理http请求，一个中间件在手，哪个地方的请求都可以有！",
   "main": "build/index.js",
   "module": "build/es5/index.js",
