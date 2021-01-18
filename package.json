@@ -10,7 +10,9 @@
     "build:cmjs": "tsc -P tsconfig.json",
     "build:es6": "tsc -P tsconfig.json --module ES6 --outDir build/es6",
     "build": "npm run build:cmjs & npm run build:es6",
-    "start": "ts-node test/app.ts"
+    "start": "ts-node test/app.ts", 
+    "build:app": "tsc --project ./tsconfig-test.json --rootDir ./test --outDir ./test",
+    "start:app": "node ./test/app.js"
   },
   "repository": {
     "type": "git",

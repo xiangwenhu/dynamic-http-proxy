@@ -29,7 +29,7 @@ function accepts(req, type) {
     return !!req.accepts(type);
 }
 function responseError(req, res, error) {
-    if (!res.finished) {
+    if (!res.writableEnded) {
         var err = util_1.getError(error);
         if (accepts(req, ["application/json"])) {
             res.json(err);
