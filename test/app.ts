@@ -22,7 +22,6 @@ app.use(express.static(__dirname + "/public"))
 
 
 app.use("/proxy", createProxy({
-    target: "http://t.weather.sojson.com",
     ssl: { key: privateKey, cert: certificate },
     pathRewrite: {
         '^/proxy': ''

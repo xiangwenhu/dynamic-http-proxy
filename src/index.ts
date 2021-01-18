@@ -30,7 +30,7 @@ function accepts(req: express.Request, type: string[]) {
 }
 
 function responseError(req: express.Request, res: express.Response, error: Error) {
-  if (!res.finished) {
+  if (!res.writableEnded) {
     const err = getError(error)
     if (accepts(req, ["application/json"])) {
       res.json(err);

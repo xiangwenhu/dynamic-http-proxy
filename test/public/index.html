@@ -16,13 +16,12 @@
         GET 请求代码：<input type="button" value="执行" id="btnGet">
         <pre>
             <code>
-                fetch("/proxy/api/weather/city/101030100", {
-                    headers:{
-                       __proxy__:"http://t.weather.sojson.com"
+                fetch("/proxy/query?type=quanfengkuaidi&postid=390011492112", {
+                    headers: {
+                         __proxy__: "http://www.kuaidi100.com"
                     }
-              })
-              .then( res=> res.json())
-              .then(d=>console.log(d))
+                })
+                    .then(res => res.json())
 
             </code>
         </pre>
@@ -32,20 +31,19 @@
         POST 请求代码： <input type="button" value="执行" id="btnPost">
         <pre>
             <code>
-                fetch("/proxy/aggsite/SubCategories",{
+                fetch("/proxy/common/GetUnReadMsgCount", {
                     "method": "post",
                     "headers": {
-                    "content-type": "application/json; charset=UTF-8",
-                    "__proxy__": JSON.stringify({
-                        "target": "https://www.cnblogs.com"
-                    })
+                        "content-type": "application/json; charset=UTF-8",
+                        "__proxy__": JSON.stringify({
+                            "target": "https://q.cnblogs.com"
+                        })
                     },
                     "body": JSON.stringify({
-                    "cateIds": "108698,2,108701,108703,108704,108705,108709,108712,108724,4"
+                        "cateIds": "108698,2,108701,108703,108704,108705,108709,108712,108724,4"
                     })
                 })
-                .then( res=> res.text())
-                .then(d=>console.log(d))
+                    .then(res => res.text())
 
             </code>
         </pre>
@@ -64,9 +62,9 @@
 
         document.getElementById("btnGet").addEventListener("click", function () {
             message.innerHTML = "";
-            fetch("/proxy/api/weather/city/101030100", {
+            fetch("/proxy/query?type=quanfengkuaidi&postid=390011492112", {
                 headers: {
-                    // __proxy__: "http://t.weather.sojson.com"
+                     __proxy__: "http://www.kuaidi100.com"
                 }
             })
                 .then(res => res.json())
@@ -77,12 +75,12 @@
 
         document.getElementById("btnPost").addEventListener("click", function () {
             message.innerHTML = "";
-            fetch("/proxy/aggsite/SubCategories", {
+            fetch("/proxy/common/GetUnReadMsgCount", {
                 "method": "post",
                 "headers": {
                     "content-type": "application/json; charset=UTF-8",
                     "__proxy__": JSON.stringify({
-                        "target": "https://www.cnblogs.com"
+                        "target": "https://q.cnblogs.com"
                     })
                 },
                 "body": JSON.stringify({
